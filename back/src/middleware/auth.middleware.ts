@@ -1,8 +1,8 @@
-const ApiError = require('../exceptions/api-error');
-const tokenService = require('../service/token.service');
+const ApiError = require('../exceptions/api.error');
+import * as tokenService from '../services/token.service';
 import { Response, NextFunction } from 'express'
 
-module.exports = function (req: any, res: Response, next: NextFunction) {
+export default (req: any, res: Response, next: NextFunction) => {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
@@ -23,4 +23,4 @@ module.exports = function (req: any, res: Response, next: NextFunction) {
   } catch (e) {
       return next(ApiError.UnauthorizedError());
   }
-};
+}
