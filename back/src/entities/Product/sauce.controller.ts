@@ -1,4 +1,4 @@
-const ApiError = require('../../exceptions/api.error');
+import ApiError from '../../exceptions/api.error'
 import { Request, Response, NextFunction } from 'express'
 import * as ProductService from './product.service';
 
@@ -20,8 +20,8 @@ export async function getAllSauces(req: Request, res: Response, next: NextFuncti
 export async function getSauceById(req: Request, res: Response, next: NextFunction) {
   try {
     const sauce = await ProductService.getProductById(req.params.id);
-    console.log(sauce, req.params.id);
     res.status(200).json(sauce);
+    console.log("Sauce info: ", sauce);
   }
   catch (error) {
     next(error);
@@ -31,7 +31,7 @@ export async function getSauceById(req: Request, res: Response, next: NextFuncti
 export async function createSauce(req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.file) {
-      throw new ApiError.BadRequest('No image provided');
+      throw ApiError.BadRequest('No image provided');
     }
     const imageUrl = `${req.protocol}://${req.get('host')}/api/images/${req.file.filename}`;
     // { sauce: String, image: File }

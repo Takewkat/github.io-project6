@@ -32,7 +32,6 @@ function getImage(req: Request, res: Response, next: NextFunction) {
   res.sendFile(fullName);
 }
 
-
 function deleteImage(req: Request, res: Response, next: NextFunction) {
   const fullName = path.join(__dirname, '../..', './images', res.locals.imageFileName)
   fs.unlink(fullName, (err: any) => {

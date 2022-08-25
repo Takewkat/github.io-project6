@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt'
-import UserModel from './user.model';
-const ApiError = require('../../exceptions/api.error');
-import * as tokenService from '../../services/token.service';
+import UserModel from './user.model'
+import ApiError from '../../exceptions/api.error'
+import * as tokenService from '../../services/token.service'
 
 export async function signup(email: string, password: string) {
   const candidate = await UserModel.findOne({email})
   if (candidate) {
-    throw ApiError.BadRequest(`User with ${email} email already exists`)
+    throw ApiError.AlreadyExists(`User with ${email} already exists`)
   }
   const hashPassword = await bcrypt.hash(password, 3);
   const user = await UserModel.create({email, password: hashPassword})
@@ -19,7 +19,7 @@ export async function signup(email: string, password: string) {
 export async function login(email: string, password: string) {
   const user = await UserModel.findOne({email})
   if (!user) {
-    throw ApiError.BadRequest('User not found')
+    throw ApiError.NotFound('User not found')
   }
   const isPassEquals = await bcrypt.compare(password, user.password);
   if (!isPassEquals) {

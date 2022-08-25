@@ -1,30 +1,27 @@
 import express from 'express';
 import config from 'config';
 import bodyParser from 'body-parser';
-import mongoose, { ConnectOptions } from "mongoose";
 import router from './routes/router';
 import corsMiddleware from './middleware/cors.middleware';
+import errorMiddleware from './middleware/error.middleware';
+import connectDB from './services/connectDB.service';
 
 const PORT = config.get<number>('PORT');
-const MONGO_URI = config.get<string>('MONGO_URI');
 
 const app = express();
 app.use(corsMiddleware);
 app.use(bodyParser.json());
 app.use('/api', router);
+app.use(errorMiddleware);
 
 const start = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    } as ConnectOptions);
-    console.log('Connected to MongoDB');
+    await connectDB();
     app.listen(PORT, () => 
       console.log(`Server started on port ${PORT}`)
     );
   } catch (err) {
-    console.log(err, 'MongoDB connection error');
+    console.log(err, 'DB connection error');
   }
 }
 

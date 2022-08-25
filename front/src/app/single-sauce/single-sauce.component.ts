@@ -33,7 +33,6 @@ export class SingleSauceComponent implements OnInit {
       map(params => params['id']),
       switchMap(id => this.sauces.getSauceById(id)),
       tap(sauce => {
-        console.log(sauce);
         this.loading = false;
         if (sauce.usersLiked.find(user => user === this.userId)) {
           this.liked = true;
