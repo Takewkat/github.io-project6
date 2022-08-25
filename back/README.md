@@ -7,3 +7,4 @@
 ## Development server
 
 Run `npm run dev` for a dev server. Server started on `http://localhost:3000/`
+Navigate to `http://localhost:4200/`
