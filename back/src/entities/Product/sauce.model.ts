@@ -16,10 +16,10 @@ interface ISauce {
 
 const sauceSchema : mongoose.Schema = new mongoose.Schema({
   userId: { type: String, required: true},
-  name: { type: String, required: true, minlength: 3, maxlength: 32 },
-  manufacturer: { type: String, required: true, minlength: 3, maxlength: 32 },
-  description: { type: String, required: true, minlength: 3, maxlength: 1000 },
-  mainPepper: { type: String, required: true, minlength: 3, maxlength: 32 },
+  name: { type: String, required: true, maxlength: 32 },
+  manufacturer: { type: String, required: true, maxlength: 32 },
+  description: { type: String, required: true, maxlength: 1000 },
+  mainPepper: { type: String, required: true, maxlength: 32 },
   imageUrl: { type: String, required: true },
   heat: { type: Number, required: true },
   likes : { type: Number, default: 0},
